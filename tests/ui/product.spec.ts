@@ -1,14 +1,9 @@
-import { test, expect } from '@playwright/test';
-import { ProductPage } from '../../pages/ProductPage';
-import { ProductDetailPage } from '../../pages/ProductDetailPage';
-import { CheckoutPage } from '../../pages/CheckoutPage'
-import { RegisterPage } from '../../pages/RegisterPage';
+import { test, expect } from '../../fixtures'
 
 const searchTerms = ['Pliers', 'Hammer'];
 
 for (const term of searchTerms) {
-    test(`TC-03 search returns ${term}`, { tag: '@smoke' }, async ({ page }) => {
-        const productPage = new ProductPage(page);
+    test(`TC-03 search returns ${term}`, { tag: '@smoke' }, async ({ productPage, page }) => {
         await productPage.goto();
         await productPage.searchproduct(term);
         await expect(productPage.productName.first()).toContainText(term);
@@ -16,8 +11,7 @@ for (const term of searchTerms) {
     })
 }
 
-test('TC-04 hammer filter only shows hammers', { tag: '@smoke' }, async ({ page }) => {
-    const productPage = new ProductPage(page);
+test('TC-04 hammer filter only shows hammers', { tag: '@smoke' }, async ({ productPage, page }) => {
     await productPage.goto();
     await productPage.filterByCategory('Hammer');
 
@@ -25,27 +19,21 @@ test('TC-04 hammer filter only shows hammers', { tag: '@smoke' }, async ({ page 
     await expect(productPage.productName.filter({ hasNotText: /hammer/i })).toHaveCount(0);
 })
 
-test('TC-05 product page matches the card you clicked', { tag: '@smoke' }, async ({ page }) => {
-    const productPage = new ProductPage(page);
-    const detailPage = new ProductDetailPage(page);
+test('TC-05 product page matches the card you clicked', { tag: '@smoke' }, async ({ productPage, productDetailPage, page }) => {
     await productPage.goto();
     const name = await productPage.productName.first().innerText();
     const price = await productPage.productPrice.first().innerText();
     await productPage.productName.first().click();
 
-    await expect(detailPage.productName).toHaveText(name);
-    await expect(detailPage.productPrice).toHaveText(price.replace('$', ''));
+    await expect(productDetailPage.productName).toHaveText(name);
+    await expect(productDetailPage.productPrice).toHaveText(price.replace('$', ''));
 })
 
-test('TC-06 product can be added and removed from cart', { tag: '@smoke' }, async ({ page }) => {
-    const productPage = new ProductPage(page);
-    const detailPage = new ProductDetailPage(page);
-    const checkoutPage = new CheckoutPage(page);
-
+test('TC-06 product can be added and removed from cart', { tag: '@smoke' }, async ({ productPage, productDetailPage, checkoutPage, page }) => {
     await productPage.goto();
     const name = await productPage.productName.first().innerText();
     await productPage.productName.first().click();
-    await detailPage.addToCart();
+    await productDetailPage.addToCart();
     await expect(page.getByTestId('cart-quantity')).toHaveText('1');
 
     await checkoutPage.goto();
@@ -54,16 +42,12 @@ test('TC-06 product can be added and removed from cart', { tag: '@smoke' }, asyn
     await expect(page.getByText('The cart is empty')).toBeVisible();
 })
 
-test('TC-07 quantity can change in checkout', { tag: '@smoke' }, async ({ page }) => {
-    const productPage = new ProductPage(page);
-    const detailPage = new ProductDetailPage(page);
-    const checkoutPage = new CheckoutPage(page);
-
+test('TC-07 quantity can change in checkout', { tag: '@smoke' }, async ({ productPage, productDetailPage, checkoutPage, page }) => {
     await productPage.goto();
     const name = await productPage.productName.first().innerText();
     const price = await productPage.productPrice.first().innerText();
     await productPage.productName.first().click();
-    await detailPage.addToCart();
+    await productDetailPage.addToCart();
     await expect(page.getByTestId('cart-quantity')).toHaveText('1');
 
     await checkoutPage.goto();
@@ -71,17 +55,13 @@ test('TC-07 quantity can change in checkout', { tag: '@smoke' }, async ({ page }
     await expect(checkoutPage.lineTotal).toHaveText(`$${(Number(price.replace('$', '')) * 2).toFixed(2)}`);
 })
 
-test('TC-08 user can register', { tag: '@smoke' }, async ({ page }) => {
-    const registerPage = new RegisterPage(page);
+test('TC-08 user can register', { tag: '@smoke' }, async ({ registerPage, page }) => {
     await registerPage.goto();
     await registerPage.registerAccount();
     await expect(page).toHaveURL('/auth/login');
 })
 
-test('TC-09 user can checkout with login', { tag: '@smoke' }, async ({ page }) => {
-    const productPage = new ProductPage(page);
-    const productDetailPage = new ProductDetailPage(page);
-    const checkoutPage = new CheckoutPage(page);
+test('TC-09 user can checkout with login', { tag: '@smoke' }, async ({ productPage, productDetailPage, checkoutPage, page }) => {
 
     await test.step('Add product to cart', async () => {
         await productPage.goto();

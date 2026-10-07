@@ -17,7 +17,7 @@ export class ProductPage {
 
     async goto() {
         await this.page.goto('/')
-            await expect(this.productName.first()).toBeVisible();
+            await expect(this.productName.first()).toBeVisible();       // wait for product list to load
     }
 
     async filterByCategory(category: string) {
