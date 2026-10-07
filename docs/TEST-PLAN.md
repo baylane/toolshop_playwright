@@ -12,7 +12,7 @@ Out of scope: real payments, email delivery, performance.
 | TC-03 | Search for product                        | High   | User journey              | Yes, UI   |
 | TC-04 | Filter only shows intended products       | Medium | User journey              | Yes, UI   |
 | TC-05 | Product page matches product clicked      | High   | Revenue path              | Yes, UI   |
-| TC-06 | Product can be added and removed from cart| High   | Revenue path              | Yes, API  |
+| TC-06 | Product can be added and removed from cart| High   | Revenue path              | Yes, UI   |
 | TC-07 | Quantity can change in checkout           | High   | Revenue path              | Yes, UI   |
 | TC-08 | User can register                         | High   | User journey              | Yes, UI   |
 | TC-09 | User can checkout with login              | High   | Revenue path              | Yes, UI   |
