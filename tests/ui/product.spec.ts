@@ -12,6 +12,7 @@ for (const term of searchTerms) {
         await productPage.goto();
         await productPage.searchproduct(term);
         await expect(productPage.productName.first()).toContainText(term);
+        await expect(productPage.productName.filter({ hasNotText: term })).toHaveCount(0);
     })
 }
 

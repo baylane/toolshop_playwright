@@ -1,4 +1,4 @@
-import { test, type Locator, type Page } from '@playwright/test';
+import { test, expect, type Locator, type Page } from '@playwright/test';
 
 export class ProductPage {
     readonly page: Page;
@@ -17,6 +17,7 @@ export class ProductPage {
 
     async goto() {
         await this.page.goto('/')
+            await expect(this.productName.first()).toBeVisible();
     }
 
     async filterByCategory(category: string) {
