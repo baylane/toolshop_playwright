@@ -1,0 +1,6 @@
+import { type Locator, type Page } from '@playwright/test';
+
+export class AccountPage {
+    readonly page: Page;
+    readonly 
+}

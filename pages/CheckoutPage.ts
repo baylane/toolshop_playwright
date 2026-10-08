@@ -53,9 +53,9 @@ export class CheckoutPage {
         await row.getByTestId('product-quantity').fill(quantity);
     }
 
-    async login() {
-        await this.emailAddress.fill('testing+1791317024953@fakenotrealbutsomewhatuniquewebsiteamirighttest.com');
-        await this.password.fill('Fake.Password1');
+    async login(email: string, password: string) {
+        await this.emailAddress.fill(email);
+        await this.password.fill(password);
         await this.loginButton.click();
     }
 

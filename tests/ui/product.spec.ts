@@ -3,7 +3,7 @@ import { test, expect } from '../../fixtures'
 const searchTerms = ['Pliers', 'Hammer'];
 
 for (const term of searchTerms) {
-    test(`TC-03 search returns ${term}`, { tag: '@smoke' }, async ({ productPage, page }) => {
+    test(`TC-03 search returns ${term}`, { tag: '@smoke' }, async ({ productPage }) => {
         await productPage.goto();
         await productPage.searchproduct(term);
         await expect(productPage.productName.first()).toContainText(term);
@@ -11,7 +11,7 @@ for (const term of searchTerms) {
     })
 }
 
-test('TC-04 hammer filter only shows hammers', { tag: '@smoke' }, async ({ productPage, page }) => {
+test('TC-04 hammer filter only shows hammers', { tag: '@smoke' }, async ({ productPage }) => {
     await productPage.goto();
     await productPage.filterByCategory('Hammer');
 
@@ -19,7 +19,7 @@ test('TC-04 hammer filter only shows hammers', { tag: '@smoke' }, async ({ produ
     await expect(productPage.productName.filter({ hasNotText: /hammer/i })).toHaveCount(0);
 })
 
-test('TC-05 product page matches the card you clicked', { tag: '@smoke' }, async ({ productPage, productDetailPage, page }) => {
+test('TC-05 product page matches the card you clicked', { tag: '@smoke' }, async ({ productPage, productDetailPage }) => {
     await productPage.goto();
     const name = await productPage.productName.first().innerText();
     const price = await productPage.productPrice.first().innerText();
@@ -61,33 +61,41 @@ test('TC-08 user can register', { tag: '@smoke' }, async ({ registerPage, page }
     await expect(page).toHaveURL('/auth/login');
 })
 
-test('TC-09 user can checkout with login', { tag: '@smoke' }, async ({ productPage, productDetailPage, checkoutPage, page }) => {
+test.describe('signed in', () => {
+    test.use({ storageState: 'playwright/.auth/user.json' });
+        test('TC-09 user can checkout with login', { tag: '@smoke' }, async ({ productPage, productDetailPage, checkoutPage, newUser, page }) => {
+            await test.step('Log out of newly registered account', async () => {
+                await productPage.goto()
+                await page.getByTestId('nav-menu').click();
+                await page.getByTestId('nav-sign-out').click();
+            })
 
-    await test.step('Add product to cart', async () => {
-        await productPage.goto();
-        await productPage.productName.first().click();
-        await productDetailPage.addToCart();
-        await expect(page.getByTestId('cart-quantity')).toHaveText('1');
-    })
-    // could also use await checkoutPage.goto() but 99% of users click the cart button instead of amending the url
-    await test.step('Navigate past inital checkout screen', async () => {
-        await page.getByTestId('nav-cart').click();
-        await expect(page).toHaveURL('/checkout');
-        await page.getByTestId('proceed-1').click();
-    })
-    
-    await test.step('Login at checkout', async () => {
-        await checkoutPage.login();
-        await page.getByTestId('proceed-2').click();
-    })
+            await test.step('Add product to cart', async () => {
+                await productPage.goto();
+                await productPage.productName.first().click();
+                await productDetailPage.addToCart();
+                await expect(page.getByTestId('cart-quantity')).toHaveText('1');
+            })
+            // could also use await checkoutPage.goto() but 99% of users click the cart button instead of amending the url
+            await test.step('Navigate past inital checkout screen', async () => {
+                await page.getByTestId('nav-cart').click();
+                await expect(page).toHaveURL('/checkout');
+                await page.getByTestId('proceed-1').click();
+            })
+            
+            await test.step('Login at checkout', async () => {
+                await checkoutPage.login(newUser.email, newUser.password);
+                await page.getByTestId('proceed-2').click();
+            })
 
-    await test.step('Enter billing information', async () => {
-        await checkoutPage.billing();
-        await page.getByTestId('proceed-3').click();
-    })
+            await test.step('Enter billing information', async () => {
+                await checkoutPage.billing();
+                await page.getByTestId('proceed-3').click();
+            })
 
-    await test.step('Pay', async () => {
-        await checkoutPage.pay();
-        await expect(page.getByTestId('payment-success-message')).toHaveText('Payment was successful');
+            await test.step('Pay', async () => {
+                await checkoutPage.pay();
+                await expect(page.getByTestId('payment-success-message')).toHaveText('Payment was successful');
+        })
     })
 })

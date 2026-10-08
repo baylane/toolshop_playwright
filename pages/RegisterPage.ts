@@ -1,4 +1,4 @@
-import { type Locator, type Page } from '@playwright/test';
+import { expect, type Locator, type Page } from '@playwright/test';
 
 export class RegisterPage {
     readonly page: Page;
@@ -44,6 +44,9 @@ export class RegisterPage {
     }
 
     async registerAccount() {
+        const email = `testing+${Date.now()}@fakenotrealbutsomewhatuniquewebsiteamirighttest.com`;
+        const password = 'Fake.Password1'
+
         await this.firstName.fill('a');
         await this.lastName.fill('a');
         await this.dateOfBirth.fill('1960-01-01');
@@ -54,8 +57,11 @@ export class RegisterPage {
         await this.city.fill('a');
         await this.state.fill('a');
         await this.phoneNumber.fill('1');
-        await this.newEmail();
-        await this.password.fill('Fake.Password1');
+        await this.emailAddress.fill(email);
+        await this.password.fill(password);
         await this.registerSubmit.click();
+        await expect(this.page).toHaveURL(/login/);
+
+        return { email, password };
     }
 }
