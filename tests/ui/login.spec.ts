@@ -9,7 +9,7 @@ test.describe('signed in', () => {
     })
 })
 
-test('TC02 wrong password shows an error', { tag: '@smoke' }, async ({ loginPage, page }) => {
+test('TC-02 wrong password shows an error', { tag: '@smoke' }, async ({ loginPage }) => {
     await loginPage.goto();
     await loginPage.login('fake39845tuewfiorjsdv@notarealwebsitestcaseakaitdoesntactuallyexist.com', 'password');
     await expect(loginPage.loginError).toContainText('Invalid email or password');

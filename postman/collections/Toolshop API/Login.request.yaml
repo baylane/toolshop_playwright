@@ -1,0 +1,19 @@
+$kind: http-request
+url: "{{baseUrl}}/users/login"
+method: POST
+body:
+  type: json
+  content: "{\r
+
+    \    \"email\": \"{{email}}\",\r
+
+    \    \"password\": \"Fake.Password1\"\r
+
+    }"
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test('login succeeded', () => pm.response.to.have.status(200));
+      pm.collectionVariables.set('token', pm.response.json().access_token);
+    language: text/javascript
+order: 3865

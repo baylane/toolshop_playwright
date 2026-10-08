@@ -1,0 +1,42 @@
+$kind: http-request
+url: "{{baseUrl}}/users/register"
+method: POST
+body:
+  type: json
+  content: "{\r
+
+    \    \"first_name\": \"a\",\r
+
+    \    \"last_name\": \"a\",\r
+
+    \    \"dob\": \"1960-01-01\",\r
+
+    \    \"phone\": \"1\",\r
+
+    \    \"email\": \"{{email}}\",\r
+
+    \    \"password\": \"Fake.Password1\",\r
+
+    \    \"address\": {\r
+
+    \        \"street\": \"a\",\r
+
+    \        \"city\": \"a\",\r
+
+    \        \"state\": \"a\",\r
+
+    \        \"country\": \"a\",\r
+
+    \        \"postal_code\": \"a\"\r
+
+    \    }\r
+
+    }"
+scripts:
+  - type: beforeRequest
+    code: pm.collectionVariables.set('email', `testing${Date.now()}@example.com`);
+    language: text/javascript
+  - type: afterResponse
+    code: pm.test('register successful', () => pm.response.to.have.status(201));
+    language: text/javascript
+order: 2000
