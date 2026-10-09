@@ -99,3 +99,11 @@ test.describe('signed in', () => {
         })
     })
 })
+
+test('TC-10 search calls the search endpoint', async ({ page, productPage }) => {
+    await productPage.goto();
+    const responsePromise = page.waitForResponse('**/products/search*');
+    await productPage.searchproduct('Pliers');
+    const response = await responsePromise;
+    expect(response.status()).toBe(200);
+})
