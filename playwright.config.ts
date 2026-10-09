@@ -36,22 +36,31 @@ export default defineConfig({
 
   /* Configure projects for major browsers */
   projects: [
-    { name: 'setup', testMatch: /.*\.setup\.ts/},
+    { name: 'setup', testMatch: /.*\.setup\.ts/ },
+
+    {
+      name: 'api',
+      testDir: './tests/api',
+      use: { baseURL: 'https://api.practicesoftwaretesting.com' },
+    },
 
     {
       name: 'chromium',
+      testIgnore: '**/api/**',
       use: { ...devices['Desktop Chrome'] },
       dependencies: ['setup'],
     },
 
     {
       name: 'firefox',
+      testIgnore: '**/api/**',
       use: { ...devices['Desktop Firefox'] },
       dependencies: ['setup'],
     },
 
     {
       name: 'webkit',
+      testIgnore: '**/api/**',
       use: { ...devices['Desktop Safari'] },
       dependencies: ['setup'],
     },
