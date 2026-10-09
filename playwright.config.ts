@@ -30,7 +30,7 @@ export default defineConfig({
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
-    baseURL: 'https://practicesoftwaretesting.com',
+    baseURL: process.env.BASE_URL ?? 'http://practicesoftwaretesting.com',
     testIdAttribute: 'data-test',
   },
 
@@ -41,7 +41,7 @@ export default defineConfig({
     {
       name: 'api',
       testDir: './tests/api',
-      use: { baseURL: 'https://api.practicesoftwaretesting.com' },
+      use: { baseURL: process.env.API_URL ?? 'https://api.practicesoftwaretesting.com' },
     },
 
     {

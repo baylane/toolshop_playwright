@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "test:local": "cross-env BASE_URL=http://localhost:4200 API_URL=http://localhost:8091 DB_HOST=localhost playwright test"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -11,6 +13,10 @@
   "devDependencies": {
     "@playwright/test": "^1.63.0",
     "@types/node": "^26.6.4",
+    "mysql2": "^3.24.5",
     "postman-cli": "^1.71.0"
+  },
+  "dependencies": {
+    "cross-env": "^10.1.0"
   }
 }
