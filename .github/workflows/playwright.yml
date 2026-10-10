@@ -27,7 +27,7 @@ jobs:
         docker compose -f docker-compose.prod.yml up -d --scale cron=0
         npx --yes wait-on --timeout 300000 http-get://localhost:8091/status http-get://localhost:4200
         for i in 1 2 3 4 5; do
-          docker compose -f docker-compose.prod.yml exec -T laravel php artisan migrate:fresh --seed && break
+          docker compose -f docker-compose.prod.yml exec -T laravel-api php artisan migrate:fresh --seed && break
           sleep 15
         done
         curl --fail --silent --show-error http://localhost:8091/products > /dev/null
