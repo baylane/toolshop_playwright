@@ -4,7 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test:local": "cross-env BASE_URL=http://localhost:4200 API_URL=http://localhost:8091 DB_HOST=localhost playwright test"
+    "test": "playwright test",
+    "test:local": "cross-env BASE_URL=http://localhost:4200 API_URL=http://localhost:8091 DB_HOST=localhost playwright test",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit"
   },
   "keywords": [],
   "author": "",
@@ -12,9 +15,13 @@
   "type": "commonjs",
   "devDependencies": {
     "@playwright/test": "^1.63.0",
-    "@types/node": "^26.6.4",
+    "@types/node": "^26.6.5",
+    "eslint": "^10.12.0",
+    "eslint-plugin-playwright": "^2.12.1",
     "mysql2": "^3.24.5",
-    "postman-cli": "^1.71.0"
+    "postman-cli": "^1.71.0",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.71.1"
   },
   "dependencies": {
     "cross-env": "^10.1.0"

@@ -25,7 +25,7 @@ export class CheckoutPage {
         this.productQuantity = page.getByTestId('product-quantity');
         this.productPrice = page.getByTestId('product-price');
         this.cartTotal = page.getByTestId('cart-total');
-        this.rows = page.locator('tbody tr');
+        this.rows = page.getByRole('row');
         this.lineTotal = page.getByTestId('line-price');
         this.emailAddress = page.getByTestId('email');
         this.password = page.getByTestId('password');

@@ -63,6 +63,7 @@ test('TC-08 user can register', { tag: '@smoke' }, async ({ registerPage, page }
 
 test.describe('signed in', () => {
     test.use({ storageState: 'playwright/.auth/user.json' });
+
         test('TC-09 user can checkout with login', { tag: '@smoke' }, async ({ productPage, productDetailPage, checkoutPage, newUser, page }) => {
             await test.step('Log out of newly registered account', async () => {
                 await productPage.goto()
@@ -77,6 +78,7 @@ test.describe('signed in', () => {
                 await expect(page.getByTestId('cart-quantity')).toHaveText('1');
             })
             // could also use await checkoutPage.goto() but 99% of users click the cart button instead of amending the url
+            
             await test.step('Navigate past inital checkout screen', async () => {
                 await page.getByTestId('nav-cart').click();
                 await expect(page).toHaveURL('/checkout');
