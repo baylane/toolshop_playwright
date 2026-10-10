@@ -43,12 +43,12 @@ jobs:
         path: playwright-report/
         retention-days: 30
     - uses: actions/upload-pages-artifact@v5
-      if: ${{ !cancelled() && github.ref == 'ref/heads/main' }}
+      if: ${{ !cancelled() && github.ref == 'refs/heads/main' }}
       with:
         path: playwright-report/
   publish-report:
     needs: test
-    if: ${{ !cancelled() && github.ref == 'ref/heads/main' }}
+    if: ${{ !cancelled() && github.ref == 'refs/heads/main' }}
     runs-on: ubuntu-latest
     permissions:
       pages: write
