@@ -17,6 +17,20 @@ jobs:
       run: npm ci
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
+    - name: Start the Toolshop
+      env:
+        SPRINT: sprint5
+      run: |
+        git clone --depth 1 https://github.com/techsmith-io/practice-software-testing.git toolshop-app
+        cd toolshop-app
+        docker build -t testsmith/practice-software-testing-web -f _docker/web.docker _docker
+        docker compose -f docker-compose.prod.yml up -d --scale cron=0
+        npx --yes wait-on --timeout 300000 http-get://localhost:8091/status http-get://localhost:4200
+        for i in 1 2 3 4 5; do
+          docker compose -f docker-compose.prod.yml exec -T laravel php artisan migrate:fresh --seed && break
+          sleep 15
+        done
+        curl --fail --silent --show-error http://localhost:8091/products > /dev/null
     - name: Run Playwright tests
       run: npx playwright test
     - uses: actions/upload-artifact@v7
