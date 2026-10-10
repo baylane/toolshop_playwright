@@ -25,5 +25,5 @@ test('signing in with an unknown email is rejected', async ({ request }) => {
 
 test('retrieving the user profile without a token is rejected', async ({ request }) => {
     const response = await request.get('/users/me');
-    expect(response.status()).toBe(400);
+    expect(response.status()).toBe(401);
 })
