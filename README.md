@@ -4,6 +4,8 @@
 
 ## [Latest test report](https://baylane.github.io/toolshop_playwright/)
 
+## [Performance report](https://baylane.github.io/toolshop_playwright/k6-report.html)
+
 
 UI, API, and database tests for Practice Software Testing's Toolshop, a demo e-commerce app, written in Playwright and typescript. Every CI starts a fresh, seeded copy of the app in Docker.
 
