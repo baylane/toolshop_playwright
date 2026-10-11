@@ -39,6 +39,10 @@ jobs:
       if: ${{ !cancelled() }}
     - name: Performance check
       if: ${{ !cancelled() }}
+      env:
+        K6_WEB_DASHBOARD: true
+        K6_WEB_DASHBOARD_PERIOD: 2s
+        K6_WEB_DASHBOARD_EXPORT: playwright-report/k6-report.html
       run: k6 run perf/products.js
     - name: Run Postman collection
       if: ${{ !cancelled() }}
