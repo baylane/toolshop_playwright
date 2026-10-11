@@ -71,6 +71,7 @@ test.describe('signed in', () => {
                 await expect(page.getByTestId('cart-quantity')).toHaveText('1');
             })
             // could also use await checkoutPage.goto() but 99% of users click the cart button instead of amending the url
+            
             await test.step('Navigate past inital checkout screen', async () => {
                 await page.getByTestId('nav-cart').click();
                 await expect(page).toHaveURL('/checkout');

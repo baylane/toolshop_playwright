@@ -1,10 +1,12 @@
 import { test, expect } from '@playwright/test';
 
-test('Products failing to load', async ({ page }) => {
-    test.fail(); // known bug: no error message is displayed when products fail to load
+test('Products failing to load', {
+    annotation: { type: 'issue', description: 'https://github.com/baylane/toolshop_playwright/issues/1' },
+}, async ({ page }) => {
+    test.fail(); // known bug - no message given to the user when products fail to load.
     await page.route('**/products*', (route) =>
         route.fulfill({ status: 500, body: 'Server error' }),
     );
     await page.goto('/');
-    await expect(page.locator('text=Products failed to load')).toBeVisible();
+    await expect(page.getByText(/went wrong/i)).toBeVisible();
 })

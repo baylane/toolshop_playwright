@@ -1,10 +1,12 @@
 import { expect, type APIRequestContext } from '@playwright/test';
 
+const apiUrl = process.env.API_URL ?? 'https://api.practicesoftwaretesting.com';
+
 export async function registerUser(request: APIRequestContext) {
     const email = `testing${crypto.randomUUID()}@example.com`;
     const password = 'Fake.Password1';
 
-    const response = await request.post('https://api.practicesoftwaretesting.com/users/register', {
+    const response = await request.post(`${apiUrl}/users/register`, {
         data: {
             first_name: 'a',
             last_name: 'a',

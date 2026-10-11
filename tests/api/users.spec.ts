@@ -18,7 +18,7 @@ test('new user can read their own profile', async ({ request, newUser }) => {
 
 test('signing in with an unknown email is rejected', async ({ request }) => {
     const response = await request.post('/users/login', {
-        data: { email: 'q9aowtrga09utwogjraTWUGJOE@awtogrhaWUT0OJAWT490U8.com', password: 'Fake.Password1' },
+        data: { email: 'thisisnotreal@awtogrhaWUTawt4oheira0uwt4eoji0OJAWT490U8.com', password: 'Fake.Password1' },
     });
     expect(response.status()).toBe(401);
 })
