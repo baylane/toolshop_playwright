@@ -19,7 +19,7 @@ UI, API, and database tests for Practice Software Testing's Toolshop, a demo e-c
 - A Dockerfile for Microsoft's Playwright image, and a dev container for GitHub Codespaces.
 - A k6 perf check run in CI.
 
-## Run it
+## Instructions on running it yourself:
 Against the public site (without CI - blocked from the public site):
 ```bash
 npm ci
