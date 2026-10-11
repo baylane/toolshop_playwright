@@ -62,13 +62,7 @@ test('TC-08 user can register', { tag: '@smoke' }, async ({ registerPage, page }
 })
 
 test.describe('signed in', () => {
-    test.use({ storageState: 'playwright/.auth/user.json' });
         test('TC-09 user can checkout with login', { tag: '@smoke' }, async ({ productPage, productDetailPage, checkoutPage, newUser, page }) => {
-            await test.step('Log out of newly registered account', async () => {
-                await productPage.goto()
-                await page.getByTestId('nav-menu').click();
-                await page.getByTestId('nav-sign-out').click();
-            })
 
             await test.step('Add product to cart', async () => {
                 await productPage.goto();
