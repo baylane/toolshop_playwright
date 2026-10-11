@@ -35,6 +35,11 @@ jobs:
         curl --fail --silent --show-error http://localhost:8091/products > /dev/null
     - name: Run Playwright tests
       run: npm run test:local
+    - uses: grafana/setup-k6-action@v1
+      if: ${{ !cancelled() }}
+    - name: Performance check
+      if: ${{ !cancelled() }}
+      run: k6 run perf/products.js
     - name: Run Postman collection
       if: ${{ !cancelled() }}
       run: npx postman collection run "postman/collections/Toolshop API" -e "postman/environments/Local.environment.yaml"
