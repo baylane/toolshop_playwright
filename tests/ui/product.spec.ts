@@ -8,8 +8,8 @@ for (const term of searchTerms) {
         await productPage.searchproduct(term);
         await expect(productPage.productName.first()).toContainText(term);
         await expect(productPage.productName.filter({ hasNotText: term })).toHaveCount(0);
-    });
-};
+    })
+}
 
 test('TC-04 hammer filter only shows hammers', { tag: '@smoke' }, async ({ productPage }) => {
     await productPage.goto();
@@ -17,7 +17,7 @@ test('TC-04 hammer filter only shows hammers', { tag: '@smoke' }, async ({ produ
 
     await expect(productPage.productName.first()).toContainText(/hammer/i);
     await expect(productPage.productName.filter({ hasNotText: /hammer/i })).toHaveCount(0);
-});
+})
 
 test('TC-05 product page matches the card you clicked', { tag: '@smoke' }, async ({ productPage, productDetailPage }) => {
     await productPage.goto();
@@ -27,7 +27,7 @@ test('TC-05 product page matches the card you clicked', { tag: '@smoke' }, async
 
     await expect(productDetailPage.productName).toHaveText(name);
     await expect(productDetailPage.productPrice).toHaveText(price.replace('$', ''));
-});
+})
 
 test('TC-06 product can be added and removed from cart', { tag: '@smoke' }, async ({ productPage, productDetailPage, checkoutPage, page }) => {
     await productPage.goto();
@@ -40,7 +40,7 @@ test('TC-06 product can be added and removed from cart', { tag: '@smoke' }, asyn
     await checkoutPage.removeItem(name);
     await expect(page.getByTestId('cart-quantity')).toBeHidden();
     await expect(page.getByText('The cart is empty')).toBeVisible();
-});
+})
 
 test('TC-07 quantity can change in checkout', { tag: '@smoke' }, async ({ productPage, productDetailPage, checkoutPage, page }) => {
     await productPage.goto();
@@ -53,13 +53,13 @@ test('TC-07 quantity can change in checkout', { tag: '@smoke' }, async ({ produc
     await checkoutPage.goto();
     await checkoutPage.changeQuantity(name, '2');
     await expect(checkoutPage.lineTotal).toHaveText(`$${(Number(price.replace('$', '')) * 2).toFixed(2)}`);
-});
+})
 
 test('TC-08 user can register', { tag: '@smoke' }, async ({ registerPage, page }) => {
     await registerPage.goto();
     await registerPage.registerAccount();
     await expect(page).toHaveURL('/auth/login');
-});
+})
 
 test.describe('signed in', () => {
         test('TC-09 user can checkout with login', { tag: '@smoke' }, async ({ productPage, productDetailPage, checkoutPage, newUser, page }) => {
@@ -91,9 +91,9 @@ test.describe('signed in', () => {
             await test.step('Pay', async () => {
                 await checkoutPage.pay();
                 await expect(page.getByTestId('payment-success-message')).toHaveText('Payment was successful');
-        });
-    });
-});
+        })
+    })
+})
 
 test('TC-10 search calls the search endpoint', async ({ page, productPage }) => {
     await productPage.goto();
@@ -101,4 +101,4 @@ test('TC-10 search calls the search endpoint', async ({ page, productPage }) => 
     await productPage.searchproduct('Pliers');
     const response = await responsePromise;
     expect(response.status()).toBe(200);
-});
+})
