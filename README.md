@@ -27,7 +27,7 @@ npx playwright install --with-deps
 npx playwright test
 ```
 
-Against your own copy of the app in Github Codespace. Open the repo in a codespace. Its dev container installs Node, Docker, and the packages::
+Against your own copy of the app in Github Codespace. Open the repo in a codespace. Its dev container installs Node, Docker, and the packages:
 ```bash
 cd /workspaces
 git clone --depth 1 https://github.com/testsmith.io/practice-software-testing.git toolshop-app
