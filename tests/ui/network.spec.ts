@@ -7,4 +7,4 @@ test('Products failing to load', async ({ page }) => {
     );
     await page.goto('/');
     await expect(page.locator('text=Products failed to load')).toBeVisible();
-})
+});

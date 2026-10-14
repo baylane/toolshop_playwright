@@ -5,6 +5,7 @@ import { ProductDetailPage } from './pages/ProductDetailPage';
 import { RegisterPage } from './pages/RegisterPage';
 import { CheckoutPage } from './pages/CheckoutPage';
 import { registerUser } from './datafactory/registerUser';
+import { ForgotPasswordPage } from './pages/ForgotPasswordPage';
 
 type Fixtures = {
     loginPage: LoginPage;
@@ -13,6 +14,7 @@ type Fixtures = {
     registerPage: RegisterPage;
     checkoutPage: CheckoutPage;
     newUser: { email: string; password: string };
+    forgotPasswordPage: ForgotPasswordPage;
 }
 
 export const test = base.extend<Fixtures>({
@@ -34,6 +36,9 @@ export const test = base.extend<Fixtures>({
     newUser: async ({ request }, use) => {
         await use(await registerUser(request));
     },
+    forgotPasswordPage: async ({ page }, use) => {
+        await use(new ForgotPasswordPage(page));
+    }
 })
 
 export { expect } from '@playwright/test';
