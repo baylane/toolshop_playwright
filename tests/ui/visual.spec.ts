@@ -6,4 +6,4 @@ test('home page matches its baseline', async ({ page, productPage }) => {
     await expect(page).toHaveScreenshot('home.png', {
         mask: [page.getByTestId('product-name')],
     });
-})
+});

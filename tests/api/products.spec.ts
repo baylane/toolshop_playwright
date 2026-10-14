@@ -6,4 +6,4 @@ test('GET /products return products', async ({ request }) => {
 
     const body = await response.json();
     expect(body.data.length).toBeGreaterThan(0);
-})
+});
