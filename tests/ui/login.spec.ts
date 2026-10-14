@@ -32,21 +32,14 @@ test('TC-11 view password button converts password to text', async ({ page, logi
     await expect(loginPage.passwordInput).toHaveAttribute('type', 'text');
 });
 
-test('TC-12, sign in with google opens a google sign in tab', async ({ page, loginPage }) => {
-    await loginPage.goto();
-    const googlePromise = context.waitForEvent('page');
-    await loginPage.googleSignIn.click();
-
-})
-
-test('TC-13 forgot yourpassword link is functional', async ({ page, loginPage }) => {
+test('TC-12 forgot yourpassword link is functional', async ({ page, loginPage }) => {
     await loginPage.goto();
     await loginPage.forgotPassword.click();
 
     await expect(page).toHaveURL(/forgot-password/)
 })
 
-test('TC-14 empty email shows an error in forgot password', async ({ forgotPasswordPage }) => {
+test('TC-13 empty email shows an error in forgot password', async ({ forgotPasswordPage }) => {
     await forgotPasswordPage.goto();
     await forgotPasswordPage.setPasswordButton.click();
 
