@@ -20,14 +20,14 @@ UI, API, and database tests for Practice Software Testing's Toolshop, a demo e-c
 - A k6 perf check run in CI.
 
 ## Instructions on running it yourself:
-Against the public site (without CI - blocked from the public site):
+Against the public site (without CI):
 ```bash
 npm ci
 npx playwright install --with-deps
 npx playwright test
 ```
 
-Against your own copy of the app, in Github Codespace. Open the repo in a codespace. Its dev container installs Node, Docker, and the packages. Then:
+Against your own copy of the app in Github Codespace. Open the repo in a codespace. Its dev container installs Node, Docker, and the packages::
 ```bash
 cd /workspaces
 git clone --depth 1 https://github.com/testsmith.io/practice-software-testing.git toolshop-app
@@ -41,7 +41,7 @@ docker build -t toolshop-tests .
 docker run --rm --init --ipc=host --network host toolshop-tests npm run test:local
 ```
 
-In Docker, with nothing else installed:
+In Docker with nothing else installed:
 ```bash
 docker build -t toolshop-tests .
 docker run --rm --init --ipc=host toolshop-tests
