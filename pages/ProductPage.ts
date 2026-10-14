@@ -6,13 +6,17 @@ export class ProductPage {
     readonly searchQuery: Locator;
     readonly searchButton: Locator;
     readonly productPrice: Locator;
+    readonly sortProducts: Locator;
+    readonly sortingComplete: Locator;
 
     constructor(page: Page) {
         this.page = page;
         this.searchQuery = page.getByTestId('search-query');
         this.searchButton = page.getByTestId('search-submit')
         this.productName = page.getByTestId('product-name');
-        this.productPrice = page.getByTestId('product-price')
+        this.productPrice = page.getByTestId('product-price');
+        this.sortProducts = page.getByTestId('sort');
+        this.sortingComplete = page.getByTestId('sorting_completed');
     }
 
     async goto() {

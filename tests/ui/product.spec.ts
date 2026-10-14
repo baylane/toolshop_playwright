@@ -102,3 +102,21 @@ test('TC-10 search calls the search endpoint', async ({ page, productPage }) => 
     const response = await responsePromise;
     expect(response.status()).toBe(200);
 })
+
+test('TC-15 all 7 sort options are present', async ({ productPage}) => {
+    await productPage.goto();
+
+    await expect(productPage.sortProducts.locator('option')).toHaveText(['', 'Name (A - Z)', 'Name (Z - A)', 'Price (High - Low)', 'Price (Low - High)', 'CO₂ Rating (A - E)', 'CO₂ Rating (E - A)'])
+})
+
+test('TC-16 products can be sorted by A - Z', async ({ productPage}) => {
+    await productPage.goto();
+    await productPage.sortProducts.selectOption('Name (A - Z)');
+    await expect(productPage.sortingComplete).toBeVisible();
+
+    const names = await productPage.productName.allInnerTexts();
+    expect(names.length).toBeGreaterThan(0);
+
+    const sorted = [...names].sort();
+    await expect(productPage.productName).toHaveText(sorted);
+})
