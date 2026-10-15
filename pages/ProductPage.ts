@@ -8,6 +8,7 @@ export class ProductPage {
     readonly productPrice: Locator;
     readonly sortProducts: Locator;
     readonly sortingComplete: Locator;
+    readonly co2RatingBadge: Locator;
 
     constructor(page: Page) {
         this.page = page;
@@ -17,6 +18,7 @@ export class ProductPage {
         this.productPrice = page.getByTestId('product-price');
         this.sortProducts = page.getByTestId('sort');
         this.sortingComplete = page.getByTestId('sorting_completed');
+        this.co2RatingBadge = page.getByTestId('co2-rating-badge');
     }
 
     async goto() {

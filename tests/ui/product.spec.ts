@@ -145,3 +145,21 @@ test('TC-19 products can be sorted by Price Low - High', async ({ productPage })
     const prices = (await productPage.productPrice.allInnerTexts()).map((text) => Number(text.replace('$', '')));
     expect(prices).toEqual([...prices].sort((a, b) => a - b));
 })
+
+test('TC-20 products can be sorted by CO2 rating from A - E', async ({ productPage }) => {
+    await productPage.goto();
+    await productPage.sortProducts.selectOption('CO₂ Rating (A - E)');
+    await expect(productPage.sortingComplete).toBeVisible();
+
+    const co2 = await productPage.co2RatingBadge.locator('.active').allInnerTexts();
+    await expect(productPage.co2RatingBadge.locator('.active')).toHaveText([...co2].sort());
+})
+
+test('TC-21 products can be sorted by CO2 rating from E - A', async ({ productPage }) => {
+    await productPage.goto();
+    await productPage.sortProducts.selectOption('CO₂ Rating (E - A)')
+    await expect(productPage.sortingComplete).toBeVisible();
+
+    const co2 = await productPage.co2RatingBadge.locator('.active').allInnerTexts();
+    await expect(productPage.co2RatingBadge.locator('.active')).toHaveText([...co2].sort().reverse());
+})
