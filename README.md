@@ -12,7 +12,7 @@ UI, API, and database tests for Practice Software Testing's Toolshop, a demo e-c
 ## In this project:
 - 23 UI tests, 9 API tests.
 - Page objects and test users delivered as fixtures - new user accounts are registered via API.
-- A mocked server error (tests/ui/network.spec.ts), a hybrid API plus UI checkout (tests/ui/product.spec.ts), and an SQL query confirming each new used is saved exactly once to the app's DB (tests/api/users-db-spec.ts).
+- A mocked server error (tests/ui/network.spec.ts), a hybrid API plus UI checkout (tests/ui/product.spec.ts), and an SQL query confirming each new user is saved exactly once to the app's DB (tests/api/users-db-spec.ts).
 - A Postman collection run.
 - Chromium, Firefox, and WebKit, with lint, type checks, and JUnit output in CI.
 - Latest reports publish to GitHub Pages on every push to main.
