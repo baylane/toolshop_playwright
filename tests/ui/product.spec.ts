@@ -1,4 +1,5 @@
 import { test, expect } from '../../fixtures'
+import { ProductPage } from '../../pages/ProductPage';
 
 const searchTerms = ['Pliers', 'Hammer'];
 
@@ -103,17 +104,44 @@ test('TC-10 search calls the search endpoint', async ({ page, productPage }) => 
     expect(response.status()).toBe(200);
 })
 
-test('TC-15 all 7 sort options are present', async ({ productPage}) => {
+test('TC-15 all 7 sort options are present', async ({ productPage }) => {
     await productPage.goto();
 
     await expect(productPage.sortProducts.locator('option')).toHaveText(['', 'Name (A - Z)', 'Name (Z - A)', 'Price (High - Low)', 'Price (Low - High)', 'CO₂ Rating (A - E)', 'CO₂ Rating (E - A)'])
 })
 
-test('TC-16 products can be sorted by A - Z', async ({ productPage}) => {
+test('TC-16 products can be sorted by Name A - Z', async ({ productPage }) => {
     await productPage.goto();
     await productPage.sortProducts.selectOption('Name (A - Z)');
     await expect(productPage.sortingComplete).toBeVisible();
 
     const names = await productPage.productName.allInnerTexts();
     await expect(productPage.productName).toHaveText([...names].sort());
+})
+
+test('TC-17 products can be sorted by Name Z - A', async ({ productPage }) => {
+    await productPage.goto()
+    await productPage.sortProducts.selectOption('Name (Z - A)');
+    await expect(productPage.sortingComplete).toBeVisible();
+
+    const name = await productPage.productName.allInnerTexts();
+    await expect(productPage.productName).toHaveText([...name].sort().reverse());
+})
+
+test('TC-18 products can be sorted by Price High - Low', async ({ productPage }) => {
+    await productPage.goto();
+    await productPage.sortProducts.selectOption('Price (High - Low)');
+    await expect(productPage.sortingComplete).toBeVisible();
+
+    const prices = (await productPage.productPrice.allInnerTexts()).map((text) => Number(text.replace('$', '')));
+    expect(prices).toEqual([...prices].sort((a, b) => b - a));
+})
+
+test('TC-19 products can be sorted by Price Low - High', async ({ productPage }) => {
+    await productPage.goto();
+    await productPage.sortProducts.selectOption('Price (Low - High)');
+    await expect(productPage.sortingComplete).toBeVisible();
+
+    const prices = (await productPage.productPrice.allInnerTexts()).map((text) => Number(text.replace('$', '')));
+    expect(prices).toEqual([...prices].sort((a, b) => a - b));
 })
