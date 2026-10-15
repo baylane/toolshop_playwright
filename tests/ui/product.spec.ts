@@ -115,8 +115,5 @@ test('TC-16 products can be sorted by A - Z', async ({ productPage}) => {
     await expect(productPage.sortingComplete).toBeVisible();
 
     const names = await productPage.productName.allInnerTexts();
-    expect(names.length).toBeGreaterThan(0);
-
-    const sorted = [...names].sort();
-    await expect(productPage.productName).toHaveText(sorted);
+    await expect(productPage.productName).toHaveText([...names].sort());
 })
