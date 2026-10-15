@@ -120,7 +120,7 @@ test('TC-16 products can be sorted by Name A - Z', async ({ productPage }) => {
 })
 
 test('TC-17 products can be sorted by Name Z - A', async ({ productPage }) => {
-    await productPage.goto()
+    await productPage.goto();
     await productPage.sortProducts.selectOption('Name (Z - A)');
     await expect(productPage.sortingComplete).toBeVisible();
 
